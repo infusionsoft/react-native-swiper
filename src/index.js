@@ -619,12 +619,12 @@ export default class extends Component {
   }
 
   refScrollView = view => {
-    this.scrollView = view;
+    this.scrollView = this.props.animated ? view.getNode() : view;
   }
 
   renderScrollView = pages => {
     if (Platform.OS === 'ios') {
-      const ScrollViewComponent = this.props.animated ? Animated.scrollView : ScrollView 
+      const ScrollViewComponent = this.props.animated ? Animated.ScrollView : ScrollView 
       return (
         <ScrollViewComponent ref={this.refScrollView}
           {...this.props}
