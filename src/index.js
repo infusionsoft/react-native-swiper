@@ -13,7 +13,8 @@ import {
   TouchableOpacity,
   ViewPagerAndroid,
   Platform,
-  ActivityIndicator
+  ActivityIndicator,
+  Animated
 } from 'react-native'
 
 /**
@@ -117,6 +118,7 @@ export default class extends Component {
       PropTypes.object,
       PropTypes.number,
     ]),
+    animated: PropTypes.bool,
     pagingEnabled: PropTypes.bool,
     showsHorizontalScrollIndicator: PropTypes.bool,
     showsVerticalScrollIndicator: PropTypes.bool,
@@ -153,6 +155,7 @@ export default class extends Component {
    */
   static defaultProps = {
     horizontal: true,
+    animated: false,
     pagingEnabled: true,
     showsHorizontalScrollIndicator: false,
     showsVerticalScrollIndicator: false,
@@ -621,8 +624,9 @@ export default class extends Component {
 
   renderScrollView = pages => {
     if (Platform.OS === 'ios') {
+      const ScrollViewComponent = this.props.animated ? Animated.scrollView : ScrollView 
       return (
-        <ScrollView ref={this.refScrollView}
+        <ScrollViewComponent ref={this.refScrollView}
           {...this.props}
           {...this.scrollViewPropOverrides()}
           contentContainerStyle={[styles.wrapperIOS, this.props.style]}
@@ -632,7 +636,7 @@ export default class extends Component {
           onScrollEndDrag={this.onScrollEndDrag}
           style={this.props.scrollViewStyle}>
           {pages}
-        </ScrollView>
+        </ScrollViewComponent>
        )
     }
     return (
