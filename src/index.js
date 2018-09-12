@@ -619,7 +619,9 @@ export default class extends Component {
   }
 
   refScrollView = view => {
-    this.scrollView = this.props.animated ? view.getNode() : view;
+    if (view) {
+      this.scrollView = this.props.animated ? view.getNode() : view;
+    }
   }
 
   renderScrollView = pages => {
